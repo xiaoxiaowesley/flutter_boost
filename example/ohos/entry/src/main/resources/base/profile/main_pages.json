@@ -2,6 +2,7 @@
   "src": [
     "pages/NativePage",
     "pages/EntryPage",
-    "pages/MyFlutterPage"
+    "pages/MyFlutterPage",
+    "pages/MyTransparentFlutterPage"
   ]
 }

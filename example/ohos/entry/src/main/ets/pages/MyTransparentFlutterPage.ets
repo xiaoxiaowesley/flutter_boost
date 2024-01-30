@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 import { FlutterPage } from '@ohos/flutter_ohos';
 import hilog from '@ohos.hilog';
 import FlutterEntry from '@ohos/flutter_ohos/src/main/ets/embedding/ohos/FlutterEntry';
@@ -32,9 +31,10 @@ import router from '@ohos.router';
 
 @Entry
 @Component
-struct MyFlutterPage {
+struct MyTransparentFlutterPage {
   private flutterEntry: FlutterBoostEntry | null = null;
   private flutterView?: FlutterView
+  private opaque: boolean = true;
 
   aboutToAppear() {
     this.flutterEntry = new FlutterBoostEntry(getContext(this), router.getParams());
@@ -43,6 +43,7 @@ struct MyFlutterPage {
     hilog.info(0x0000, "Flutter", "Index aboutToAppear===");
   }
 
+  //2
   aboutToDisappear() {
     hilog.info(0x0000, "Flutter", "Index aboutToDisappear===");
     this.flutterEntry?.aboutToDisappear()
@@ -52,6 +53,7 @@ struct MyFlutterPage {
     hilog.info(0x0000, "Flutter", "Index onPageShow===");
     this.flutterEntry?.onPageShow()
   }
+
   // 1
   onPageHide() {
     hilog.info(0x0000, "Flutter", "Index onPageHide===");
@@ -61,6 +63,11 @@ struct MyFlutterPage {
   build() {
     Stack() {
       FlutterPage({ viewId: this.flutterView?.getId() })
-    }
+    }.backgroundColor(Color.Transparent)
+  }
+
+  pageTransition() {
+    PageTransitionEnter({ type: RouteType.None, duration: 0 })
+    PageTransitionExit({ type: RouteType.None, duration: 0 })
   }
 }

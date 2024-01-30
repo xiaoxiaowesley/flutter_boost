@@ -44,11 +44,16 @@ export default class EntryAbility extends UIAbility implements FlutterBoostDeleg
   pushNativeRoute(options: FlutterBoostRouteOptions) {
 
   }
+
   // 打开flutter
   pushFlutterRoute(options: FlutterBoostRouteOptions) {
+    let pageName: string = 'pages/MyFlutterPage'
+    if (options.isOpaque() == false) {
+      pageName = 'pages/MyTransparentFlutterPage'
+    }
 
     router.pushUrl({
-      url: 'pages/MyFlutterPage', params: {
+      url: pageName, params: {
         uri: options.getPageName(),
         params: options.getArguments(),
       }
@@ -59,8 +64,6 @@ export default class EntryAbility extends UIAbility implements FlutterBoostDeleg
 
   async onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
     FlutterManager.getInstance().pushUIAbility(this)
-
-
   }
 
   onDestroy(): void {

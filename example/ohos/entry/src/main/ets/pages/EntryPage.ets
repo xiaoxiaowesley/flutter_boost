@@ -25,7 +25,7 @@ import router from '@ohos.router';
 import { FlutterPage } from '@ohos/flutter_ohos';
 import bottomTabItems from '../viewmodel/BottomTabItems';
 import { TabItem } from '../viewmodel/TabItem';
-import { FlutterBoostEntry } from '@ohos/flutter_boost';
+import { FlutterBoost, FlutterBoostEntry } from '@ohos/flutter_boost';
 
 const TAG = "EntryPage";
 
@@ -34,6 +34,7 @@ const TAG = "EntryPage";
 struct EntryPage {
   @State currentIndex: number = 0;
   private flutterEntries: Array<FlutterBoostEntry> = [];
+  private isOpaque: boolean = true;
 
   build() {
     Column() {
@@ -103,13 +104,14 @@ struct EntryPage {
 
   _onFlutterTabShow() {
     if (this.currentIndex == 1) {
-      this.flutterEntries[0]?.onPageShow();
       this.flutterEntries[1]?.onPageHide();
+      this.flutterEntries[0]?.onPageShow();
     } else if (this.currentIndex == 2) {
-      this.flutterEntries[1]?.onPageShow();
       this.flutterEntries[0]?.onPageHide();
+      this.flutterEntries[1]?.onPageShow();
     }
   }
+
   _onFlutterTabHide() {
     if (this.currentIndex == 1) {
       this.flutterEntries[1]?.onPageHide();
@@ -118,7 +120,7 @@ struct EntryPage {
     }
   }
 
-    @Builder
+  @Builder
   CardTab(item: TabItem) {
     Column() {
       Image(this.currentIndex === item.index ? item.imageActivated : item.imageOriginal)
@@ -145,12 +147,14 @@ struct EntryPage {
       Column() {
         Button('打开FlutterEntry')
           .onClick(() => {
-            router.pushUrl({ url: 'pages/MyFlutterPage', params: {
-              uri: 'flutterPage',
-              params: {}
-            } }).then(() => {
-              console.info('Succeeded in jumping to the second page.')
-            })
+            this.isOpaque = true;
+            FlutterBoost.getInstance().open('flutterPage', {})
+          })
+
+        Button('打开透明FlutterEntry')
+          .onClick(() => {
+            this.isOpaque = false;
+            FlutterBoost.getInstance().open('transparentWidget', {}, this.isOpaque)
           })
       }
     } else if (this.currentIndex === 1) {
@@ -162,6 +166,13 @@ struct EntryPage {
         .fontSize("20fp")
         .fontColor(Color.Black)
         .fontWeight(500)
+    }
+  }
+
+  pageTransition() {
+    if (this.isOpaque == false) {
+      PageTransitionEnter({ type: RouteType.None, duration: 0 })
+      PageTransitionExit({ type: RouteType.None, duration: 0 })
     }
   }
 }
