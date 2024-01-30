@@ -15,21 +15,7 @@
 
 {
   "app": {
-    "signingConfigs": [
-      {
-        "name": "default",
-        "type": "HarmonyOS",
-        "material": {
-          "certpath": "/Users/xiaoxiang/.ohos/config/auto_debug_ohos_com.example.flutter_boost_example_30086000547693853.cer",
-          "storePassword": "0000001B82DF5ADB1BFE85480A86BEC6E6D92306D7935C3ADF2797D4E79EB9E2A7B9D00A41574B07881D28",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001B8744F13209D0E9325183B423DA7AF7B6EDA420CE7784A12EEB8C2ADFD8D79B9EF8B779579D5EAC",
-          "profile": "/Users/xiaoxiang/.ohos/config/auto_debug_ohos_com.example.flutter_boost_example_30086000547693853.p7b",
-          "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/xiaoxiang/.ohos/config/auto_debug_ohos_com.example.flutter_boost_example_30086000547693853.p12"
-        }
-      }
-    ],
+    "signingConfigs": [],
     "products": [
       {
         "name": "default",
